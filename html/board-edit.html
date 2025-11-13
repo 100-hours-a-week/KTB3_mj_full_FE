@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>게시글 수정</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body class="board-bg">
+  <div class="board-wrapper detail-wrapper">
+    <!-- 상단 헤더 -->
+    <header class="board-header">
+      <div class="board-logo">게시글 수정</div>
+
+      <div class="board-title-with-back">
+        <button id="backBtn" class="back-arrow">&lt;</button>
+        <span class="board-title">아무 말 대잔치</span>
+      </div>
+
+     <div class="board-profile">
+  <div class="profile-circle" id="profileIcon">
+    <img id="profileImg" alt="profile" />
+  </div>
+  <div class="profile-menu" id="profileMenu">
+    <button type="button" id="goProfileBtn">회원정보 수정</button>
+    <button type="button" id="btnPassword">비밀번호 변경</button>
+    <button type="button" id="logoutBtn">로그아웃</button>
+  </div>
+</div>
+
+    </header>
+
+    <!-- 구분선 -->
+    <div class="board-divider"></div>
+
+    <!-- 수정 폼 -->
+    <main class="new-main">
+      <form id="editPostForm" class="new-post-form">
+        <!-- 제목 -->
+        <div class="form-group">
+          <label for="title">제목</label>
+          <input
+            id="title"
+            type="text"
+            maxlength="26"
+            placeholder="제목을 입력해주세요 (최대 26자)"
+            required
+          />
+          <div id="titleHelper" class="helper-text"></div>
+        </div>
+
+        <!-- 내용 -->
+        <div class="form-group">
+          <label for="content">내용</label>
+          <textarea
+            id="content"
+            rows="8"
+            placeholder="내용을 입력해주세요."
+            required
+          ></textarea>
+          <div id="contentHelper" class="helper-text"></div>
+        </div>
+
+        <!-- 이미지 URL (선택) -->
+        <div class="form-group">
+          <label for="imageUrl">이미지 URL (선택)</label>
+          <input
+            id="imageUrl"
+            type="text"
+            placeholder="이미지 URL을 입력하거나 비워두세요."
+          />
+        </div>
+
+        <!-- 버튼 -->
+        <div class="new-actions">
+          <button type="button" id="cancelBtn" class="cancel-btn">
+            취소
+          </button>
+          <button
+            type="submit"
+            id="submitBtn"
+            class="edit-submit-btn"
+            disabled
+          >
+            수정하기
+          </button>
+        </div>
+      </form>
+    </main>
+  </div>
+
+  <!-- ES Modules -->
+  <script type="module" src="../js/pages/board-edit.js"></script>
+ 
+
+</body>
+</html>

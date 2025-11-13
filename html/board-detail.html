@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>게시글 상세조회</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body class="board-bg">
+  <div class="board-wrapper detail-wrapper">
+    <!-- 상단 헤더 -->
+    <header class="board-header">
+      <div class="board-logo">게시글 상세조회</div>
+
+      <div class="board-title-with-back">
+        <!-- 🔧 헤더 화살표 버튼 ID 분리 -->
+        <button id="backBtnHeader" class="back-arrow" type="button" aria-label="목록으로">&lt;</button>
+        <span class="board-title">아무 말 대잔치</span>
+      </div>
+
+     <div class="board-profile">
+  <div class="profile-circle" id="profileIcon">
+    <img id="profileImg" alt="profile" />
+  </div>
+  <div class="profile-menu" id="profileMenu">
+    <button type="button" id="goProfileBtn">회원정보 수정</button>
+    <button type="button" id="btnPassword">비밀번호 변경</button>
+    <button type="button" id="logoutBtn">로그아웃</button>
+  </div>
+</div>
+
+    </header>
+
+    <!-- 구분선 -->
+    <div class="board-divider"></div>
+
+    <!-- 상세 내용 영역 -->
+    <main id="postDetail" class="post-detail">
+      <!-- JS에서 렌더링 -->
+    </main>
+
+    <!-- 댓글 입력 영역 -->
+    <section class="comment-input-area">
+      <textarea
+        id="commentInput"
+        class="comment-input"
+        placeholder="댓글을 남겨주세요."
+      ></textarea>
+      <button id="commentSubmitBtn" class="comment-submit-btn" type="button">
+        댓글 등록
+      </button>
+    </section>
+
+    <!-- 댓글 리스트 -->
+    <section id="commentList" class="comment-list">
+      <!-- JS에서 렌더링 -->
+    </section>
+  </div>
+
+  <script type="module" src="../js/pages/board-detail.js"></script>
+  
+
+</body>
+</html>

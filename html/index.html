@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>로그인</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body class="board-bg">
+  <div class="board-wrapper">
+    <!-- 상단 헤더 -->
+    <header class="board-header">
+      <div class="board-logo">로그인</div>
+      <div class="board-title">아무 말 대잔치</div>
+      <div class="board-profile">
+        <div class="profile-circle"></div>
+      </div>
+    </header>
+
+    <div class="board-divider"></div>
+
+    <!-- 로그인 폼 -->
+    <main style="display:flex; justify-content:center; margin-top:80px;">
+      <div style="width:420px;">
+        <h2 style="text-align:center; margin-bottom:24px;">로그인</h2>
+
+        <form id="loginForm">
+          <!-- 이메일 -->
+          <div class="form-group">
+            <label for="email">이메일</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="이메일을 입력해주세요"
+              required
+            />
+            <div id="emailHelper" class="helper-text"></div>
+          </div>
+
+          <!-- 비밀번호 -->
+          <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input
+              id="password"
+              type="password"
+              placeholder="비밀번호를 입력해주세요"
+              required
+            />
+            <div id="passwordHelper" class="helper-text"></div>
+          </div>
+
+          <!-- 로그인 버튼 -->
+          <button
+            id="loginBtn"
+            type="submit"
+            class="edit-submit-btn"
+            disabled
+          >
+            로그인
+          </button>
+        </form>
+
+        <!-- 회원가입 이동 -->
+        <div style="text-align:center; margin-top:12px;">
+          <button
+            id="goRegisterBtn"
+            type="button"
+            class="small-action-btn"
+            style="width:auto; padding:4px 14px; font-size:12px;"
+          >
+            회원가입
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/auth.js"></script>
+ <script type="module" src="../js/pages/login.js"></script>
+
+</body>
+</html>

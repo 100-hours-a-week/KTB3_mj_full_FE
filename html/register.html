@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>회원가입</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>회원가입</h1>
+    <form id="registerForm">
+      <!-- 닉네임 -->
+      <div class="form-group">
+        <label for="nickname">닉네임</label>
+        <input id="nickname" type="text" required />
+        <small id="nicknameHelper" class="helper-text"></small>
+      </div>
+
+      <!-- 이메일 -->
+      <div class="form-group">
+        <label for="email">이메일</label>
+        <input id="email" type="email" required />
+        <small id="emailHelper" class="helper-text"></small>
+      </div>
+
+      <!-- 비밀번호 -->
+      <div class="form-group">
+        <label for="password">비밀번호</label>
+        <input id="password" type="password" required />
+        <small id="passwordHelper" class="helper-text"></small>
+      </div>
+
+      <!-- 비밀번호 확인 -->
+      <div class="form-group">
+        <label for="passwordConfirm">비밀번호 확인</label>
+        <input id="passwordConfirm" type="password" required />
+        <small id="passwordConfirmHelper" class="helper-text"></small>
+      </div>
+
+      <!-- ✅ 프로필 이미지 추가 (선택) -->
+      <div class="form-group">
+        <label for="profileImage">프로필 이미지 URL (선택)</label>
+        <input id="profileImage" type="text" placeholder="https://..." />
+        <small class="helper-text">비워두면 기본 이미지가 사용됩니다.</small>
+      </div>
+
+      <!-- 회원가입 버튼 -->
+      <button id="registerBtn" type="submit" disabled>회원가입</button>
+    </form>
+
+    <p style="margin-top:10px;">
+      이미 계정이 있으신가요?
+      <button type="button" id="goLoginBtn" class="link-btn">로그인</button>
+    </p>
+  </div>
+
+  <script src="../js/register.js"></script>
+</body>
+</html>
