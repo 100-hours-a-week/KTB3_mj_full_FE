@@ -2,26 +2,33 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>로그인</title>
+  <title>여기어땠어 | 로그인</title>
   <link rel="stylesheet" href="../css/style.css" />
 </head>
-<body class="board-bg">
-  <div class="board-wrapper">
-    <!-- 상단 헤더 -->
-    <header class="board-header">
-      <div class="board-logo">로그인</div>
-      <div class="board-title">아무 말 대잔치</div>
-      <div class="board-profile">
-        <div class="profile-circle"></div>
+<body class="board-bg auth-split-bg">
+  <div class="auth-split-wrapper">
+    <!-- 왼쪽 브랜드 패널 -->
+    <section class="auth-brand-panel">
+      <div class="auth-brand-inner">
+        <div class="auth-logo">여기어땠어?</div>
+        <p class="auth-brand-tagline">
+          여행이 끝날 때마다,<br />
+          예산과 추억을 함께 기록해보세요.
+        </p>
+        <p class="auth-brand-desc">
+          여행별 예산과 실제 지출, 그리고 후기를 한 번에 모아볼 수 있는<br />
+          나만의 여행 기록 보드입니다.
+        </p>
       </div>
-    </header>
+    </section>
 
-    <div class="board-divider"></div>
-
-    <!-- 로그인 폼 -->
-    <main style="display:flex; justify-content:center; margin-top:80px;">
-      <div style="width:420px;">
-        <h2 style="text-align:center; margin-bottom:24px;">로그인</h2>
+    <!-- 오른쪽 로그인 폼 패널 -->
+    <section class="auth-form-panel">
+      <div class="auth-form-card">
+        <h1 class="auth-form-title">로그인</h1>
+        <p class="auth-form-subtitle">
+          여기어땠어 보드에 저장해 둔 여행 기록들을 다시 만나보세요.
+        </p>
 
         <form id="loginForm">
           <!-- 이메일 -->
@@ -60,22 +67,21 @@
         </form>
 
         <!-- 회원가입 이동 -->
-        <div style="text-align:center; margin-top:12px;">
+        <div class="auth-switch">
+          <span>아직 계정이 없으신가요?</span>
           <button
             id="goRegisterBtn"
             type="button"
-            class="small-action-btn"
-            style="width:auto; padding:4px 14px; font-size:12px;"
+            class="link-btn auth-switch-btn"
           >
             회원가입
           </button>
         </div>
       </div>
-    </main>
+    </section>
   </div>
 
   <script src="../js/auth.js"></script>
- <script type="module" src="../js/pages/login.js"></script>
-
+  <script type="module" src="../js/pages/login.js"></script>
 </body>
 </html>

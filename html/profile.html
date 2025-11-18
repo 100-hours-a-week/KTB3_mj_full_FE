@@ -2,21 +2,33 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>회원정보 수정</title>
+  <title>여기어땠어 | 회원정보 수정</title>
   <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body class="board-bg">
   <div class="board-wrapper detail-wrapper">
     <header class="board-header">
-      <div class="board-logo">회원정보수정</div>
+      <!-- 왼쪽 로고 -->
+      <div class="board-logo">여기어땠어?</div>
 
+      <!-- 가운데 타이틀 + 뒤로가기 -->
       <div class="board-title-with-back">
-        <button id="backBtn" class="back-arrow">&lt;</button>
-        <span class="board-title">아무 말 대잔치</span>
+        <button
+          id="backBtn"
+          class="back-arrow"
+          type="button"
+          aria-label="이전 페이지로"
+        >
+          &lt;
+        </button>
+        <span class="board-title">여행 예산 & 후기 기록 보드</span>
       </div>
 
+      <!-- 오른쪽 프로필 -->
       <div class="board-profile">
-        <div class="profile-circle" id="profileIcon"></div>
+        <div class="profile-circle" id="profileIcon">
+          <img id="profileImg" alt="profile" />
+        </div>
         <div class="profile-menu" id="profileMenu">
           <button type="button" id="goPasswordBtn">비밀번호 변경</button>
           <button type="button" id="logoutBtn">로그아웃</button>
@@ -30,19 +42,38 @@
       <form id="profileForm" class="new-post-form">
         <div class="form-group">
           <label for="nickname">닉네임</label>
-          <input id="nickname" type="text" maxlength="20" placeholder="닉네임(최대 20자)" required />
+          <input
+            id="nickname"
+            type="text"
+            maxlength="20"
+            placeholder="여기어땠어에서 사용할 닉네임 (최대 20자)"
+            required
+          />
           <div id="nicknameHelper" class="helper-text"></div>
         </div>
 
         <div class="form-group">
           <label for="profileImage">프로필 이미지 URL (선택)</label>
-          <input id="profileImage" type="text" placeholder="https://..." />
-          <div class="helper-text">비워두면 기존 값을 유지합니다.</div>
+          <input
+            id="profileImage"
+            type="text"
+            placeholder="https://..."
+          />
+          <div class="helper-text">비워두면 기존 프로필 이미지를 그대로 사용합니다.</div>
         </div>
 
         <div class="new-actions">
-          <button type="button" id="cancelBtn" class="cancel-btn">취소</button>
-          <button type="submit" id="submitBtn" class="edit-submit-btn" disabled>수정하기</button>
+          <button type="button" id="cancelBtn" class="cancel-btn">
+            취소
+          </button>
+          <button
+            type="submit"
+            id="submitBtn"
+            class="edit-submit-btn"
+            disabled
+          >
+            수정하기
+          </button>
         </div>
       </form>
     </main>

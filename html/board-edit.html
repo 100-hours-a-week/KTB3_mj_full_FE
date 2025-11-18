@@ -2,31 +2,32 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>게시글 수정</title>
+  <title>여기어땠어 | 여행 기록 수정</title>
   <link rel="stylesheet" href="../css/style.css" />
 </head>
 <body class="board-bg">
   <div class="board-wrapper detail-wrapper">
     <!-- 상단 헤더 -->
     <header class="board-header">
-      <div class="board-logo">게시글 수정</div>
+      <div class="board-logo">여기어땠어?</div>
 
       <div class="board-title-with-back">
-        <button id="backBtn" class="back-arrow">&lt;</button>
-        <span class="board-title">아무 말 대잔치</span>
+        <button id="backBtn" class="back-arrow" type="button" aria-label="목록으로">
+          &lt;
+        </button>
+        <span class="board-title">여행 예산 & 후기 기록 보드</span>
       </div>
 
-     <div class="board-profile">
-  <div class="profile-circle" id="profileIcon">
-    <img id="profileImg" alt="profile" />
-  </div>
-  <div class="profile-menu" id="profileMenu">
-    <button type="button" id="goProfileBtn">회원정보 수정</button>
-    <button type="button" id="btnPassword">비밀번호 변경</button>
-    <button type="button" id="logoutBtn">로그아웃</button>
-  </div>
-</div>
-
+      <div class="board-profile">
+        <div class="profile-circle" id="profileIcon">
+          <img id="profileImg" alt="profile" />
+        </div>
+        <div class="profile-menu" id="profileMenu">
+          <button type="button" id="goProfileBtn">회원정보 수정</button>
+          <button type="button" id="btnPassword">비밀번호 변경</button>
+          <button type="button" id="logoutBtn">로그아웃</button>
+        </div>
+      </div>
     </header>
 
     <!-- 구분선 -->
@@ -35,26 +36,26 @@
     <!-- 수정 폼 -->
     <main class="new-main">
       <form id="editPostForm" class="new-post-form">
-        <!-- 제목 -->
+        <!-- 제목: 여행 이름 / 장소 -->
         <div class="form-group">
-          <label for="title">제목</label>
+          <label for="title">여행 제목</label>
           <input
             id="title"
             type="text"
             maxlength="26"
-            placeholder="제목을 입력해주세요 (최대 26자)"
+            placeholder="예: 상하이 2박 3일, 부산 해운대 당일치기 (최대 26자)"
             required
           />
           <div id="titleHelper" class="helper-text"></div>
         </div>
 
-        <!-- 내용 -->
+        <!-- 내용: 여행에 대한 상세 메모 / 후일담 -->
         <div class="form-group">
-          <label for="content">내용</label>
+          <label for="content">여행 내용 / 후기</label>
           <textarea
             id="content"
             rows="8"
-            placeholder="내용을 입력해주세요."
+            placeholder="여행 일정, 기억에 남는 순간, 다시 가고 싶은지 등을 적어주세요."
             required
           ></textarea>
           <div id="contentHelper" class="helper-text"></div>
@@ -66,7 +67,7 @@
           <input
             id="imageUrl"
             type="text"
-            placeholder="이미지 URL을 입력하거나 비워두세요."
+            placeholder="여행 사진이 있다면 이미지 URL을 입력하거나 비워두셔도 됩니다."
           />
         </div>
 
@@ -90,7 +91,5 @@
 
   <!-- ES Modules -->
   <script type="module" src="../js/pages/board-edit.js"></script>
- 
-
 </body>
 </html>

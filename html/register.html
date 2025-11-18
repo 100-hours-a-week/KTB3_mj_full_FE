@@ -2,56 +2,119 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <title>회원가입</title>
+  <title>여기어땠어 | 회원가입</title>
   <link rel="stylesheet" href="../css/style.css" />
 </head>
-<body>
-  <div class="container">
-    <h1>회원가입</h1>
-    <form id="registerForm">
-      <!-- 닉네임 -->
-      <div class="form-group">
-        <label for="nickname">닉네임</label>
-        <input id="nickname" type="text" required />
-        <small id="nicknameHelper" class="helper-text"></small>
+<body class="board-bg auth-split-bg">
+  <div class="auth-split-wrapper">
+    <!-- 왼쪽 브랜드 패널 -->
+    <section class="auth-brand-panel">
+      <div class="auth-brand-inner">
+        <div class="auth-logo">여기어땠어?</div>
+        <p class="auth-brand-tagline">
+          여행의 예산과 감정을,<br />
+          한 번에 기록하는 여행 노트.
+        </p>
+        <p class="auth-brand-desc">
+          여행마다 예산과 실제 지출, 그리고 한 줄 후기를 남겨두면<br />
+          다음 여행에서 더 똑똑하게 쓸 수 있어요.
+        </p>
       </div>
+    </section>
 
-      <!-- 이메일 -->
-      <div class="form-group">
-        <label for="email">이메일</label>
-        <input id="email" type="email" required />
-        <small id="emailHelper" class="helper-text"></small>
+    <!-- 오른쪽 회원가입 폼 패널 -->
+    <section class="auth-form-panel">
+      <div class="auth-form-card">
+        <h1 class="auth-form-title">회원가입</h1>
+        <p class="auth-form-subtitle">
+          여기어땠어 계정을 만들고, 나만의 여행 기록 보드를 시작해보세요.
+        </p>
+
+        <form id="registerForm">
+          <!-- 닉네임 -->
+          <div class="form-group">
+            <label for="nickname">닉네임</label>
+            <input
+              id="nickname"
+              type="text"
+              placeholder="여기어땠어에서 사용할 닉네임"
+              required
+            />
+            <div id="nicknameHelper" class="helper-text"></div>
+          </div>
+
+          <!-- 이메일 -->
+          <div class="form-group">
+            <label for="email">이메일</label>
+            <input
+              id="email"
+              type="email"
+              placeholder="이메일을 입력해주세요"
+              required
+            />
+            <div id="emailHelper" class="helper-text"></div>
+          </div>
+
+          <!-- 비밀번호 -->
+          <div class="form-group">
+            <label for="password">비밀번호</label>
+            <input
+              id="password"
+              type="password"
+              placeholder="비밀번호를 입력해주세요"
+              required
+            />
+            <div id="passwordHelper" class="helper-text"></div>
+          </div>
+
+          <!-- 비밀번호 확인 -->
+          <div class="form-group">
+            <label for="passwordConfirm">비밀번호 확인</label>
+            <input
+              id="passwordConfirm"
+              type="password"
+              placeholder="비밀번호를 한 번 더 입력해주세요"
+              required
+            />
+            <div id="passwordConfirmHelper" class="helper-text"></div>
+          </div>
+
+          <!-- 프로필 이미지 (선택) -->
+          <div class="form-group">
+            <label for="profileImage">프로필 이미지 URL (선택)</label>
+            <input
+              id="profileImage"
+              type="text"
+              placeholder="https://..."
+            />
+            <div class="helper-text">
+              비워두면 기본 프로필 이미지가 사용됩니다.
+            </div>
+          </div>
+
+          <!-- 회원가입 버튼 -->
+          <button
+            id="registerBtn"
+            type="submit"
+            class="edit-submit-btn"
+            disabled
+          >
+            회원가입
+          </button>
+        </form>
+
+        <div class="auth-switch">
+          <span>이미 계정이 있으신가요?</span>
+          <button
+            type="button"
+            id="goLoginBtn"
+            class="link-btn auth-switch-btn"
+          >
+            로그인
+          </button>
+        </div>
       </div>
-
-      <!-- 비밀번호 -->
-      <div class="form-group">
-        <label for="password">비밀번호</label>
-        <input id="password" type="password" required />
-        <small id="passwordHelper" class="helper-text"></small>
-      </div>
-
-      <!-- 비밀번호 확인 -->
-      <div class="form-group">
-        <label for="passwordConfirm">비밀번호 확인</label>
-        <input id="passwordConfirm" type="password" required />
-        <small id="passwordConfirmHelper" class="helper-text"></small>
-      </div>
-
-      <!-- ✅ 프로필 이미지 추가 (선택) -->
-      <div class="form-group">
-        <label for="profileImage">프로필 이미지 URL (선택)</label>
-        <input id="profileImage" type="text" placeholder="https://..." />
-        <small class="helper-text">비워두면 기본 이미지가 사용됩니다.</small>
-      </div>
-
-      <!-- 회원가입 버튼 -->
-      <button id="registerBtn" type="submit" disabled>회원가입</button>
-    </form>
-
-    <p style="margin-top:10px;">
-      이미 계정이 있으신가요?
-      <button type="button" id="goLoginBtn" class="link-btn">로그인</button>
-    </p>
+    </section>
   </div>
 
   <script src="../js/register.js"></script>
