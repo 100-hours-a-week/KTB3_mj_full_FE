@@ -65,4 +65,4 @@
 
 1. 레포지토리 클론
    ```bash
-   git clone <this-repo-url>
+   git clone (https://github.com/100-hours-a-week/KTB3_mj_full_FE.git)
