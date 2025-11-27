@@ -1,6 +1,5 @@
 // js/pages/login.js
-import { API_BASE_URL } from "../utils/config.js";
-import { setCurrentUser } from "../common/storage.js";
+import { login } from "../api/authApi.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("loginForm");
@@ -13,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const loginBtn = document.getElementById("loginBtn");
   const goRegisterBtn = document.getElementById("goRegisterBtn");
 
-  // ===== 입력 유효성 & 버튼 활성화 =====
+  
   const isValidEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
   const isValidPassword = (pw) =>
     pw.length >= 8 && pw.length <= 20 &&
@@ -61,14 +60,14 @@ document.addEventListener("DOMContentLoaded", () => {
   passwordInput.addEventListener("input", validate);
   validate();
 
-  // ===== 회원가입 이동 =====
+  
   if (goRegisterBtn) {
     goRegisterBtn.addEventListener("click", () => {
       window.location.href = "register.html";
     });
   }
 
-  // ===== 폼 제출(백엔드 연동) =====
+  
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -79,25 +78,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const password = passwordInput.value.trim();
 
     try {
-      const res = await fetch(`${API_BASE_URL}/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      
+      const result = await login(email, password);
 
-      const body = await res.json().catch(() => ({}));
-      // 백엔드 응답: {"message":"loginSuccess","data":{"user_id":1}}
-      if (res.ok && body?.data?.user_id != null) {
-        setCurrentUser({ userId: body.data.user_id, email });
+      console.log("로그인 결과:", result);
+
+      
+      if (result.ok && result.data?.data?.token) {
+       
+        localStorage.setItem("currentUser", JSON.stringify({
+          userId: result.data.data.user_id,
+          email: result.data.data.email,
+          nickname: result.data.data.nickname
+        }));
+
+        console.log("로그인 성공 - 토큰:", localStorage.getItem("token")?.substring(0, 20) + "...");
+
         alert("로그인 성공!");
         window.location.href = "board-list.html";
         return;
       }
 
-      // 실패 케이스
-      alert(body?.message ?? "이메일 또는 비밀번호를 확인해주세요.");
+      
+      if (result.status === 401) {
+        alert("이메일 또는 비밀번호를 확인해주세요.");
+      } else {
+        alert(result.data?.message ?? "로그인에 실패했습니다.");
+      }
     } catch (err) {
-      console.error(err);
+      console.error("로그인 에러:", err);
       alert("로그인 중 오류가 발생했습니다.");
     }
   });

@@ -22,9 +22,8 @@ async function initList() {
   writeBtn?.addEventListener("click", () => location.href = "board-new.html");
 
   try {
-    const res = await fetch(`${API_BASE_URL}/posts`, {
-      headers: { "X-User-Id": String(me.userId) },
-    });
+    
+    const res = await fetch(`${API_BASE_URL}/posts`);
 
     if (!res.ok) {
       if (res.status === 401) {

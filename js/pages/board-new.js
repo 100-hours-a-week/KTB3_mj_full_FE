@@ -22,24 +22,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const contentHelper = document.getElementById("contentHelper");
   const submitBtn = document.getElementById("submitBtn");
   const cancelBtn = document.getElementById("cancelBtn");
-//회원가입 -> 로그인 -> 회원정보수정 -> 게시글 작성 -> 게시글 들어가서 좋아요 누르기, 댓글 -> 게시글 수정
-  // 뒤로가기
+
+  
   backBtn?.addEventListener("click", () => {
     window.location.href = "board-list.html";
   });
 
-  // 취소 버튼
+  
   cancelBtn?.addEventListener("click", () => {
     if (confirm("작성을 취소하시겠습니까?")) {
       window.location.href = "board-list.html";
     }
   });
 
-  // 입력 시 유효성 검사
+  
   titleInput.addEventListener("input", validateForm);
   contentInput.addEventListener("input", validateForm);
 
-  // 폼 제출
+  
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -51,7 +51,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const image = imageUrlInput.value.trim() || null;
 
     try {
-      const res = await createPost(currentUser.userId, {
+      
+      const res = await createPost({
         title,
         content,
         image,

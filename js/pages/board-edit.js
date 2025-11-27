@@ -31,26 +31,26 @@ document.addEventListener("DOMContentLoaded", async () => {
   const submitBtn = document.getElementById("submitBtn");
   const cancelBtn = document.getElementById("cancelBtn");
 
-  // 뒤로가기
+  
   backBtn?.addEventListener("click", () => {
     window.location.href = `board-detail.html?id=${postId}`;
   });
 
-  // 취소
+  
   cancelBtn?.addEventListener("click", () => {
     if (confirm("수정을 취소하시겠습니까?")) {
       window.location.href = `board-detail.html?id=${postId}`;
     }
   });
 
-  // 기존 게시글 데이터 불러오기
+  
   await loadPostData();
 
-  // 입력 시 유효성 검사
+  
   titleInput.addEventListener("input", validateForm);
   contentInput.addEventListener("input", validateForm);
 
-  // 폼 제출
+  
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -62,7 +62,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     const image = imageUrlInput.value.trim() || null;
 
     try {
-      const res = await updatePost(currentUser.userId, postId, {
+      
+      const res = await updatePost(postId, {
         title,
         content,
         image,
@@ -90,7 +91,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function loadPostData() {
     try {
-      const res = await fetchPostDetail(currentUser.userId, postId);
+      
+      const res = await fetchPostDetail(postId);
 
       if (res.status === 401) {
         alert("로그인이 만료되었습니다. 다시 로그인해주세요.");

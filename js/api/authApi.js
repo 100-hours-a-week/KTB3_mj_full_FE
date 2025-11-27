@@ -7,12 +7,36 @@ export const login = async (email, password) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),
   });
-  return res;
+  
+  
+  if (res.ok) {
+    const data = await res.json();
+    
+    
+    if (data.data && data.data.token) {
+      localStorage.setItem("token", data.data.token);
+    }
+    
+    
+    return {
+      ok: true,
+      status: res.status,
+      data: data
+    };
+  }
+  
+  // 실패 시
+  return {
+    ok: false,
+    status: res.status,
+    data: null
+  };
 };
 
-export const logout = async (userId) => {
+export const logout = async () => {
+  localStorage.removeItem("token");
+  
   return fetch(`${API_BASE_URL}/auth/logout`, {
     method: "POST",
-    headers: { "X-User-Id": String(userId) },
   });
 };

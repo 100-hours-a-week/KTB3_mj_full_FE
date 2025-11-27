@@ -36,10 +36,10 @@ async function init() {
     return;
   }
 
-  await loadPostDetail(postId, me.userId);
+  await loadPostDetail(postId);
   
   try {
-    await increasePostView(me.userId, postId);
+    await increasePostView(postId);
   } catch (_) {}
   
   const vc = document.getElementById("viewCount");
@@ -49,8 +49,8 @@ async function init() {
     vc.textContent = formatCount(raw);
   }
 
-  await loadComments(postId, me.userId);
-  setupCommentSubmit(postId, me.userId);
+  await loadComments(postId);
+  setupCommentSubmit(postId);
 }
 
 function handleBack() {
@@ -64,14 +64,16 @@ function handleBack() {
   location.href = "board-list.html";
 }
 
-async function loadPostDetail(postId, userId) {
+async function loadPostDetail(postId) {
   const container = document.getElementById("postDetail");
   if (!container) return;
 
   try {
-    const res = await fetch(`${API_BASE_URL}/posts/${postId}`, {
-      headers: { "X-User-Id": String(userId) },
-    });
+    
+    const token = localStorage.getItem("token");
+    const headers = token ? { "Authorization": `Bearer ${token}` } : {};
+    
+    const res = await fetch(`${API_BASE_URL}/posts/${postId}`, { headers });
 
     if (!res.ok) {
       if (res.status === 404) {
@@ -92,14 +94,15 @@ async function loadPostDetail(postId, userId) {
   }
 }
 
-async function loadComments(postId, userId) {
+async function loadComments(postId) {
   const commentList = document.getElementById("commentList");
   if (!commentList) return;
 
   let comments = [];
 
   try {
-    const data = await fetchComments(userId, postId);
+    
+    const data = await fetchComments(postId);
     comments = Array.isArray(data?.data) ? data.data
              : Array.isArray(data) ? data
              : [];
@@ -124,7 +127,7 @@ async function loadComments(postId, userId) {
       `).join("");
     }
 
-    bindCommentActions(postId, userId);
+    bindCommentActions(postId);
 
   } catch (err) {
     console.error(err);
@@ -139,7 +142,7 @@ async function loadComments(postId, userId) {
   }
 }
 
-function bindCommentActions(postId, userId) {
+function bindCommentActions(postId) {
   const list = document.getElementById("commentList");
   if (!list || list._bound) return;
   list._bound = true;
@@ -150,7 +153,7 @@ function bindCommentActions(postId, userId) {
 
     if (editBtn) {
       const id = Number(editBtn.dataset.id);
-      startEditComment(list, postId, userId, id);
+      startEditComment(list, postId, id);
       return;
     }
 
@@ -159,17 +162,18 @@ function bindCommentActions(postId, userId) {
       if (!confirm("이 댓글을 삭제하시겠습니까?")) return;
 
       try {
-        const { ok, status } = await deleteComment(userId, postId, id);
-        if (!ok) {
-          if (status === 401) {
-            alert("로그인이 만료되었습니다.");
-            location.href = "index.html";
-            return;
-          }
+        
+        const res = await deleteComment(postId, id);
+        if (res.status === 401) {
+          alert("로그인이 만료되었습니다.");
+          location.href = "index.html";
+          return;
+        }
+        if (res.status !== 204) {
           alert("댓글 삭제에 실패했습니다.");
           return;
         }
-        await loadComments(postId, userId);
+        await loadComments(postId);
       } catch (err) {
         console.error(err);
         alert("댓글 삭제 중 오류가 발생했습니다.");
@@ -178,7 +182,7 @@ function bindCommentActions(postId, userId) {
   });
 }
 
-function startEditComment(listEl, postId, userId, commentId) {
+function startEditComment(listEl, postId, commentId) {
   const item = listEl.querySelector(`.comment-item[data-id="${commentId}"]`);
   if (!item) return;
 
@@ -207,17 +211,18 @@ function startEditComment(listEl, postId, userId, commentId) {
       return;
     }
     try {
-      const { ok, status } = await updateComment(userId, postId, commentId, newText);
-      if (!ok) {
-        if (status === 401) {
-          alert("로그인이 만료되었습니다.");
-          location.href = "index.html";
-          return;
-        }
+      // ★★★ userId 제거 ★★★
+      const res = await updateComment(postId, commentId, newText);
+      if (res.status === 401) {
+        alert("로그인이 만료되었습니다.");
+        location.href = "index.html";
+        return;
+      }
+      if (!res.ok) {
         alert("댓글 수정에 실패했습니다.");
         return;
       }
-      await loadComments(postId, userId);
+      await loadComments(postId);
     } catch (err) {
       console.error(err);
       alert("댓글 수정 중 오류가 발생했습니다.");
@@ -230,7 +235,7 @@ function startEditComment(listEl, postId, userId, commentId) {
   });
 }
 
-function setupCommentSubmit(postId, userId) {
+function setupCommentSubmit(postId) {
   const commentInput = document.getElementById("commentInput");
   const commentSubmitBtn = document.getElementById("commentSubmitBtn");
   if (!commentInput || !commentSubmitBtn) return;
@@ -244,7 +249,8 @@ function setupCommentSubmit(postId, userId) {
     }
 
     try {
-      const res = await createComment(userId, postId, content);
+      // ★★★ userId 제거 ★★★
+      const res = await createComment(postId, content);
 
       if (res.status === 401) {
         alert("로그인이 만료되었습니다.");
@@ -258,7 +264,7 @@ function setupCommentSubmit(postId, userId) {
       }
 
       commentInput.value = "";
-      await loadComments(postId, userId);
+      await loadComments(postId);
       alert("댓글이 등록되었습니다.");
     } catch (err) {
       console.error(err);
@@ -355,7 +361,8 @@ function renderDetail(post, container) {
   likeBtn?.addEventListener("click", async () => {
     try {
       if (!liked) {
-        const res = await likePost(me.userId, postId);
+        // ★★★ userId 제거 ★★★
+        const res = await likePost(postId);
         if (!res.ok) return alert("좋아요 처리에 실패했습니다.");
         liked = true;
         likes = (likes || 0) + 1;
@@ -363,7 +370,7 @@ function renderDetail(post, container) {
         likeBtn.classList.remove("disabled");
         likeBtn.classList.add("enabled");
       } else {
-        const res = await unlikePost(me.userId, postId);
+        const res = await unlikePost(postId);
         if (!res.ok) return alert("좋아요 취소에 실패했습니다.");
         liked = false;
         likes = Math.max(0, (likes || 0) - 1);
@@ -380,12 +387,14 @@ function renderDetail(post, container) {
 }
 
 async function deletePost(postId) {
-  const me = getCurrentUser();
-  
   try {
+    // ★★★ JWT 인증 헤더 사용 ★★★
+    const token = localStorage.getItem("token");
+    const headers = token ? { "Authorization": `Bearer ${token}` } : {};
+    
     const res = await fetch(`${API_BASE_URL}/posts/${postId}`, {
       method: "DELETE",
-      headers: { "X-User-Id": String(me.userId) },
+      headers,
     });
     
     if (res.status === 204) {

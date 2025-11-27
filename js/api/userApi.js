@@ -1,51 +1,90 @@
 // js/api/userApi.js
 import { API_BASE_URL } from "../utils/config.js";
 
-/** 공통 헤더 */
-const authHeaders = (userId) => ({ "X-User-Id": String(userId) });
-const jsonHeaders = (userId) => ({ "Content-Type": "application/json", ...authHeaders(userId) });
-const withCreds = (init={}) => ({ credentials: "include", ...init });
 
-/* ------------------ 내 정보 조회 ------------------ */
-/** 1순위: GET /users/me, 404면 2순위: GET /users/{id} */
-export const fetchMe = async (userId) => {
-  const r1 = await fetch(`${API_BASE_URL}/users/me`, {
-    credentials: "include",
-    headers: { "X-User-Id": String(userId) },
-  });
-  // 500/401/400 등은 그대로 반환(폴백 금지)
-  if (r1.status !== 404) return r1;
-
-  // 백엔드에 /users/{id} GET이 실제로 있을 때만 의미 있음
-  return fetch(`${API_BASE_URL}/users/${userId}`, {
-    credentials: "include",
-    headers: { "X-User-Id": String(userId) },
-  });
+const getAuthHeaders = () => {
+  const token = localStorage.getItem("token");
+  return {
+    "Content-Type": "application/json",
+    ...(token && { "Authorization": `Bearer ${token}` })
+  };
 };
 
-export const updateMe = async (userId, { nickname, profile_image }) => {
-  const body = JSON.stringify({ nickname, profile_image });
+
+export const fetchMe = async () => {
+  console.log("\n=== fetchMe 호출 ===");
+  console.log("요청 URL:", `${API_BASE_URL}/users/me`);
+  
   try {
-    const r1 = await fetch(`${API_BASE_URL}/users/me`, withCreds({ method:"PATCH", headers: jsonHeaders(userId), body }));
-    if (r1.status !== 404) return r1;
-  } catch {}
-  return fetch(`${API_BASE_URL}/users/${userId}`, withCreds({ method:"PATCH", headers: jsonHeaders(userId), body }));
-};
-/* ------------------ 비밀번호 변경 ------------------ */
-/** 1순위: PATCH /users/me/password, 404면 2순위: PATCH /users/{id}/password */
-export const changePassword = async (userId, { new_password, new_password_confirm }) => {
-  const payload = JSON.stringify({ new_password, new_password_confirm });
-  try {
-    const r1 = await fetch(`${API_BASE_URL}/users/me/password`, {
-      method: "PATCH",
-      headers: jsonHeaders(userId),
-      body: payload,
+    const response = await fetch(`${API_BASE_URL}/users/me`, {
+      headers: getAuthHeaders()
     });
-    if (r1.status !== 404) return r1;
-  } catch (_) { /* 다음 후보 시도 */ }
-  return fetch(`${API_BASE_URL}/users/${userId}/password`, {
-    method: "PATCH",
-    headers: jsonHeaders(userId),
-    body: payload,
+    
+    console.log("응답 상태:", response.status);
+    
+    // ★★★ Response 객체를 그대로 반환 (body 읽지 않음) ★★★
+    return response;
+  } catch (error) {
+    console.error("❌ fetchMe 실패:", error);
+    throw error;
+  }
+};
+
+
+export const updateMe = async ({ nickname, profile_image }) => {
+  console.log("\n=== updateMe 호출 ===");
+  console.log("nickname:", nickname);
+  console.log("profile_image:", profile_image);
+  
+  const body = JSON.stringify({ nickname, profile_image });
+  const url = `${API_BASE_URL}/users/me`;
+  
+  console.log("요청 URL:", url);
+  console.log("요청 바디:", body);
+
+  try {
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers: getAuthHeaders(),
+      body
+    });
+    
+    console.log("응답 상태:", response.status);
+    
+    return response;
+  } catch (error) {
+    console.error("❌ updateMe 실패:", error);
+    throw error;
+  }
+};
+
+
+export const changePassword = async ({
+  new_password,
+  new_password_confirm,
+}) => {
+  console.log("\n=== changePassword 호출 ===");
+  
+  const payload = JSON.stringify({
+    new_password,
+    new_password_confirm,
   });
+
+  try {
+    const response = await fetch(
+      `${API_BASE_URL}/users/me/password`,
+      {
+        method: "PATCH",
+        headers: getAuthHeaders(),
+        body: payload,
+      }
+    );
+    
+    console.log("응답 상태:", response.status);
+    
+    return response;
+  } catch (error) {
+    console.error("❌ changePassword 실패:", error);
+    throw error;
+  }
 };
